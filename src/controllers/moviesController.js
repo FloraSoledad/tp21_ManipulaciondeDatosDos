@@ -3,6 +3,7 @@ const sequelize = db.sequelize;
 
 //Otra forma de llamar a los modelos
 const Movies = db.Movie;
+const Genres = db.Genre;
 
 const moviesController = {
     'list': (req, res) => {
@@ -42,61 +43,84 @@ const moviesController = {
             });
     }, //Aqui debemos modificar y completar lo necesario para trabajar con el CRUD
     add: function (req, res) {
-        // TODO   
-        db.Genre.findAll({
-            order : [ 'name']
-        })
-            .then(genres => res.render('moviesAdd', {genres}))
-        .catch(error => console.log (error)) 
+        Genres.findAll({
+            order: ['name']
+            
+        }).then(allGenres=>{
+            return res.render('moviesAdd',{allGenres})
+        }).catch(err => console.log(err))  
     },
     create: function (req, res) {
-        // TODO
-        const {title, release_date, awards, length,rating, genre}= req.body
+        // CREATE METHOD
+        const {title, rating, awards, length, genre, release_date} = req.body;
+
         db.Movie.create({
             title: title.trim(),
             rating,
             length,
             awards,
+            genre,
             release_date,
             genre_id : genre
-        }).then(movie => {
-            console.log(movie)
-            return res.redirect('/movies')
-      }).catch(error => console.log(error)) 
-
+        }).then(movie=>{
+            console.log(movie);
+            return res.redirect('/movies');
+        }).catch(err => console.log(err))
     },
-    edit: function (req, res) {
-        let Movie = Movies.findByPk(req.params.id, {
-            include: [
-                {
-                    association : 'genres' 
-                }
-            ]
-        })
+    edit: function(req, res) {
+        // EDIT METHOD
+        let Movie = Movies.findByPk(req.params.id)
+
         let allGenres = Genres.findAll({
             order: ['name']
-        });
-        Promise.all([Movie, allGenres])
-            .then(([Movie,allGenres])=>{
-            /*     console.log(Movie)
-                console.log(allGenres) */
-                return res.send(Movie) 
-                return res.render('moviesEdit',{
-                    Movie,
-                    allGenres,
-                    moment
-                })
+        })
+
+        Promise.all([Movie,allGenres])
+        
+        .then(([Movie,allGenres])=>{
+            
+            return res.render('moviesEdit', {
+                Movie,
+                allGenres
             })
-        .catch(error => console.log(error)) 
+        }).catch(err => console.log(err))
     },
+    
     update: function (req,res) {
         // TODO
+        const {title, rating, awards, length, genre, release_date} = req.body;
+
+        db.Movie.update({
+            title: title.trim(),
+            rating,
+            awards,
+            length,
+            genre_id: genre,
+            release_date
+        },{
+            where:{
+                id:req.params.id
+            }
+        }).then(Movie=>{
+            console.log(Movie);
+            return res.redirect('/movies');
+        }).catch(err => console.log(err))
     },
     delete: function (req, res) {
         // TODO
+        Movies.findByPk(req.params.id)
+            .then(Movie=>{
+                return res.render('moviesDelete',{Movie})
+            })
     },
     destroy: function (req, res) {
         // TODO
+        const id= req.params.id;
+        Movies.destroy({
+            where:{id}
+        }).then(()=>{
+            res.redirect('/movies')
+        }).catch(err=>console.log(err))
     }
 
 }

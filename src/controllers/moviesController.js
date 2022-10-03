@@ -65,8 +65,29 @@ const moviesController = {
       }).catch(error => console.log(error)) 
 
     },
-    edit: function(req, res) {
-        // TODO
+    edit: function (req, res) {
+        let Movie = Movies.findByPk(req.params.id, {
+            include: [
+                {
+                    association : 'genres' 
+                }
+            ]
+        })
+        let allGenres = Genres.findAll({
+            order: ['name']
+        });
+        Promise.all([Movie, allGenres])
+            .then(([Movie,allGenres])=>{
+            /*     console.log(Movie)
+                console.log(allGenres) */
+                return res.send(Movie) 
+                return res.render('moviesEdit',{
+                    Movie,
+                    allGenres,
+                    moment
+                })
+            })
+        .catch(error => console.log(error)) 
     },
     update: function (req,res) {
         // TODO

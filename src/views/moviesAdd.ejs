@@ -27,11 +27,7 @@
             <label for="length">Length </label>
             <p><input type="number" name="length" id="" required></p>
             <label for="genre">Generos</label>
-            <select name ='genre' id="genre">
-                <option value="" hidden selected>Selecciona...</option>
-                <% genres.forEach(genre => { %>
-                    <option value="<%= genre.id %>"><%= genre.name %></option>
-                <% }) %>
+          
 
             </select>
 

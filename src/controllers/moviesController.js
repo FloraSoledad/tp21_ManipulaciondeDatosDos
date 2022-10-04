@@ -43,12 +43,8 @@ const moviesController = {
             });
     }, //Aqui debemos modificar y completar lo necesario para trabajar con el CRUD
     add: function (req, res) {
-        Genres.findAll({
-            order: ['name']
-            
-        }).then(allGenres=>{
-            return res.render('moviesAdd',{allGenres})
-        }).catch(err => console.log(err))  
+        //TODO
+      return res.render('moviesAdd')
     },
     create: function (req, res) {
         // CREATE METHOD
@@ -88,7 +84,7 @@ const moviesController = {
     
     update: function (req,res) {
         // TODO
-        const {title, rating, awards, length, genre, release_date} = req.body;
+      /*   const {title, rating, awards, length, genre, release_date} = req.body;
 
         db.Movie.update({
             title: title.trim(),
@@ -104,23 +100,23 @@ const moviesController = {
         }).then(Movie=>{
             console.log(Movie);
             return res.redirect('/movies');
-        }).catch(err => console.log(err))
+        }).catch(err => console.log(err)) */
     },
     delete: function (req, res) {
         // TODO
-        Movies.findByPk(req.params.id)
+     /*    Movies.findByPk(req.params.id)
             .then(Movie=>{
                 return res.render('moviesDelete',{Movie})
-            })
+            }) */
     },
     destroy: function (req, res) {
-        // TODO
+      /*   // TODO
         const id= req.params.id;
         Movies.destroy({
             where:{id}
         }).then(()=>{
             res.redirect('/movies')
-        }).catch(err=>console.log(err))
+        }).catch(err=>console.log(err)) */
     }
 
 }

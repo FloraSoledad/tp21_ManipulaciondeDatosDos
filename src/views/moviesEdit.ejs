@@ -27,11 +27,11 @@
             <p><input type="number" name="length" id="" value="<%= Movie.length %>" required></p>
             <br>
         
-            <label for="genre">Generos</label>
+            <label for="genre"> Generos</label>
             <select name="genre" id="genre" required>
                 <option value="" hidden selected>Selecciona...</option>
                 <% allGenres.forEach( genre => { %>
-                    <option value="<%= genre.id %>"> <% if (Movie.genre_id == genre.id) { %><%= 'selected' %><% };%>><%= genre.name %></option>  
+                    <option value="<%= genre.id %>" <% if (Movie.genre_id == genre.id) { %><%= 'selected' %><% };%>><%= genre.name %></option>  
                     <% }) %>
             </select>
       

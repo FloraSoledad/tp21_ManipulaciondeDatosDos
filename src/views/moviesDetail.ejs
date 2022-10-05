@@ -17,6 +17,12 @@
     <p>AWARDS: <%= movie.awards %> </p>
     <p>LENGTH: <%= movie.length + ' min'%> </p>
     <p>RELEASE DATE: <%= movie.release_date %> </p>
+    <br>
+    <section>
+        <!--Aquí debe colocar los botones de Modificar - Borrar y Listado de Películas-->
+        <a class="botonModificar" href="/movies/edit/<%= movie.id %>">EDITAR</a>
+        <a class="botonBorrar" href="/movies/delete?id=<%= movie.id %>&title=<%= movie.title %> ">ELIMINAR</a>
+    </section>
 
 </body>
 </html>

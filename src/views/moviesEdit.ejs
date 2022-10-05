@@ -14,7 +14,7 @@
       </figure>
     <h1 class="titulo">Película a Editar:  <%= Movie.title %></h1>
     <section class="formulario">
-        <form action="/movies/update/<%= Movie.id %>?_method=PUT" method="POST">
+        <form action="/movies/update/<%= Movie.id %>" method="POST">
             <label for="title">Title </label>
             <p><input type="text" name="title" id="title" value="<%= Movie.title %>" required></p>
             <label for="rating">Rating </label>
@@ -22,14 +22,20 @@
             <label for="awards">Awards </label>
             <p><input type="number" name="awards" id="awards" value="<%= Movie.awards %>" required></p>
             <label for="release_date">Release date </label>
-            <p><input type="date" name="release_date" id="release_date" value="<%= Movie.release_date %>" required></p>
+            <p><input type="date" name="release_date" id="" value="<%=moment(Movie.release_date).format('YYYY-MM-DD') %>" required></p>
             <label for="length">Length </label>
             <p><input type="number" name="length" id="" value="<%= Movie.length %>" required></p>
             <br>
+        
+            <label for="genre">Generos</label>
+            <select name="genre" id="genre" required>
+                <option value="" hidden selected>Selecciona...</option>
+                <% allGenres.forEach( genre => { %>
+                    <option value="<%= genre.id %>"> <% if (Movie.genre_id == genre.id) { %><%= 'selected' %><% };%>><%= genre.name %></option>  
+                    <% }) %>
+            </select>
       
             <p> <button class="botonAgregar" type="submit">Actualizar</button>
-              
-        
             <a  class="botonVolver" href="/movies">Listado de Películas</a></p>
         </form>
     </section>
